@@ -1,8 +1,6 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
 import { DATE_ORIGIN_MILLISECONDS } from '../constants';
-import { Button } from '@mui/material';
+import { Box, Slider, Button, Typography } from '@mui/material';
 
 // TBD to date
 function valuetext(value: number) {
@@ -23,12 +21,12 @@ const DateBox = ({ label, date}: DateBoxProps) => {
       justifyContent: "center",
       alignItems: "center",
     }}>
-      <Box sx={{ color: "primary.main" }}>
+      <Typography sx={{ color: "primary.main" }}>
         {label}
-      </Box>
-      <Box sx={{ color: "primary.main" }}>
+      </Typography>
+      <Typography sx={{ color: "primary.main" }}>
         {date}
-      </Box>
+      </Typography>
     </Box>
   )
 }
@@ -47,7 +45,7 @@ export default function DatePicker() {
   const dateMaxString = new Date(value[1]).toLocaleDateString("fi-FI")
 
   return (
-    <Box>
+    <Box sx={{ bgcolor: "background.dark" }}>
       <Box sx={{
         width: "calc(100%-2em)",
         padding: "2em 4em 0em 4em",
