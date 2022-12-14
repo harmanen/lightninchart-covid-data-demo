@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Chart from './components/Chart';
 import './App.css'
 import { DATA_CONSTANTS, DATE_ORIGIN_MILLISECONDS } from './constants';
+import { findVariableIndex } from './functions/helpers.ts';
 
 const App = (props) => {  
   const [rawData, setRawData] = useState("")
@@ -22,17 +23,17 @@ const App = (props) => {
       // Take the header row out
       const headers = rows.shift()
 
-      const {
-        INDEX_DATE,
-        INDEX_COUNTRY,
-        INDEX_ICU_PATIENTS_PER_MILLION
-      } = DATA_CONSTANTS
 
+
+      const indexDate = findVariableIndex(headers, DATA_CONSTANTS.DATE)
+      const indexCountry = findVariableIndex(headers, DATA_CONSTANTS.COUNTRY)
+      const indexPatients = findVariableIndex(headers, DATA_CONSTANTS.PATIENTS)
+      
       const finnishData = rows
         .map(item => {
-          const date = item[INDEX_DATE]
-          const country = item[INDEX_COUNTRY]
-          const patients = item[INDEX_ICU_PATIENTS_PER_MILLION]
+          const date = item[indexDate]
+          const country = item[indexCountry]
+          const patients = item[indexPatients]
 
           if (country === "Finland") {
             return {
