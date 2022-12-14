@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import Chart from './components/Chart';
 import './App.css'
+import { DATA_CONSTANTS, DATE_ORIGIN_MILLISECONDS } from './constants';
 
-const App = (props) => {
-  const url = "https://covid.ourworldindata.org/data/owid-covid-data.csv"
+const App = (props) => {  
+  const [rawData, setRawData] = useState("")
   
-  const [ rawData, setRawData ] = useState("")
+  const [data, setData] = useState([])
 
-  fetch(url)
+  useEffect(() => {
+    fetch(DATA_CONSTANTS.URL)
     .then(response => response.text())
     .then(text => setRawData(text))
-  
+  }, [rawData])
+
   useEffect(() => {
     if (rawData.length > 0) {
       // Make array of arrays per row from the csv
@@ -18,13 +22,37 @@ const App = (props) => {
       // Take the header row out
       const headers = rows.shift()
 
-      // Add data handling later
-      // console.log(headers)
-      // console.log(rows)
-  }}, [rawData])
+      const {
+        INDEX_DATE,
+        INDEX_COUNTRY,
+        INDEX_ICU_PATIENTS_PER_MILLION
+      } = DATA_CONSTANTS
 
-  return <div className='App'>
-    Add here
+      const finnishData = rows
+        .map(item => {
+          const date = item[INDEX_DATE]
+          const country = item[INDEX_COUNTRY]
+          const patients = item[INDEX_ICU_PATIENTS_PER_MILLION]
+
+          if (country === "Finland") {
+            return {
+              // Calculate time difference in milliseconds
+              x: new Date(date).getTime() - DATE_ORIGIN_MILLISECONDS,
+              // Number of patients or 0 if no data
+              y: patients || "0.0",
+            }
+          }
+
+          return null
+        })
+        .filter(item => item !== null)
+
+      setData(finnishData)
+    }
+  }, [rawData])
+
+  return <div className='fill'>
+    {rawData.length && <Chart id="chart1" data={data}/>}
   </div>
 }
 
