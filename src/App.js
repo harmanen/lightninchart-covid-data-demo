@@ -23,10 +23,12 @@ const App = (props) => {
       // Take the header row out
       const headers = rows.shift()
 
+      // Find array indices for relevant variables
       const indexDate = findVariableIndex(headers, DATA_CONSTANTS.DATE)
       const indexCountry = findVariableIndex(headers, DATA_CONSTANTS.COUNTRY)
       const indexPatients = findVariableIndex(headers, DATA_CONSTANTS.PATIENTS)
       
+      // Find data for Finland and generate input objects for the chart
       const finnishData = rows
         .map(item => {
           const date = item[indexDate]
@@ -44,7 +46,11 @@ const App = (props) => {
 
           return null
         })
+        // Filter out other countries
         .filter(item => item !== null)
+        // Filter out zero values. This is okay because after
+        // the initial rise all zero values are probably missing data
+        .filter(item => item.y > 0)
 
       setData(finnishData)
     }

@@ -22,6 +22,7 @@ const Chart = (props) => {
         (tickStrategy) => tickStrategy.setDateOrigin(DATE_ORIGIN)
       )
 
+      // Use default y axis
       chart
         .getDefaultAxisY()
         .setTitle("Number of patients (normalized)")
