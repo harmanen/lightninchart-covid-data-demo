@@ -25,7 +25,11 @@ const Chart = (props) => {
       chart
         .getDefaultAxisY()
         .setTitle("Number of patients (normalized)")
-        .setInterval(0, 20) // automate this somehow
+        .setInterval(
+          0,
+          // Find the max y value and increase by 10 %
+          Math.max(...data.map(item => Number(item.y))) * 1.1
+        ) 
 
       const series = chart.addLineSeries()
       // Store references to chart components.

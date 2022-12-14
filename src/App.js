@@ -23,8 +23,6 @@ const App = (props) => {
       // Take the header row out
       const headers = rows.shift()
 
-
-
       const indexDate = findVariableIndex(headers, DATA_CONSTANTS.DATE)
       const indexCountry = findVariableIndex(headers, DATA_CONSTANTS.COUNTRY)
       const indexPatients = findVariableIndex(headers, DATA_CONSTANTS.PATIENTS)
