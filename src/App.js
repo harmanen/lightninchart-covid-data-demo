@@ -3,6 +3,7 @@ import Chart from './components/Chart';
 import './App.css'
 import { DATA_CONSTANTS, DATE_ORIGIN_MILLISECONDS } from './constants';
 import { findVariableIndex } from './functions/helpers.ts';
+import DatePicker from './components/DatePicker.tsx';
 
 const App = (props) => {  
   const [rawData, setRawData] = useState("")
@@ -57,6 +58,7 @@ const App = (props) => {
   }, [rawData])
 
   return <div className='fill'>
+    <DatePicker/>
     {rawData.length && <Chart id="chart1" data={data}/>}
   </div>
 }
