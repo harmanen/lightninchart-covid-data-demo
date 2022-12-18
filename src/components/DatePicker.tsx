@@ -3,9 +3,9 @@ import { Box, BoxProps, Slider, Button, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { DATE_ORIGIN_MILLISECONDS } from '../constants';
 
-// TBD to date
+// Slider Aria stuff
 function valuetext(value: number) {
-  return `${value}°C`;
+  return `${new Date(value)}`;
 }
 
 type DateBoxProps = {
