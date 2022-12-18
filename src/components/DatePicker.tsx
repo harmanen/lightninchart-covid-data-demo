@@ -41,16 +41,35 @@ const BackgroundBox = styled(Box)<BoxProps>(({ theme }) => ({
     ${theme.palette.wallpaper.dark})`
 }))
 
-export default function DatePicker() {
+export default function DatePicker(props: {
+  setTimeRange: Function,
+  setIsRenderClicked: Function,
+}) {
+  const { setTimeRange, setIsRenderClicked } = props
+
+  // Initial values
   const dateMin = DATE_ORIGIN_MILLISECONDS
   const dateMax = new Date().getTime()
 
+  // Initial state
   const [value, setValue] = React.useState<number[]>([dateMin, dateMax]);
 
+  // Slider change
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
 
+  // Modify App state
+  const handleClickRender = () => {
+    setIsRenderClicked(true)
+
+    setTimeRange({
+      minValue: new Date(value[0]),
+      maxValue: new Date(value[1])
+    })
+  }
+
+  // For the user to see
   const dateMinString = new Date(value[0]).toLocaleDateString("fi-FI")
   const dateMaxString = new Date(value[1]).toLocaleDateString("fi-FI")
 
@@ -79,7 +98,7 @@ export default function DatePicker() {
         padding: "0em 2em 2em 2em",
       }}>
         <DateBox label={"Start date"} date={dateMinString} />
-        <Button variant='contained'>
+        <Button variant='contained' onClick={handleClickRender}>
           Render!
         </Button>
         <DateBox label={"End date"} date={dateMaxString} />

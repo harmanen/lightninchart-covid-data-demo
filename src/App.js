@@ -5,6 +5,7 @@ import './App.css'
 
 import {
   DATA_CONSTANTS,
+  DATE_ORIGIN,
   DATE_ORIGIN_MILLISECONDS,
   LOCAL_DATA_FILE, USE_LOCAL_DATA,
 } from './constants';
@@ -13,10 +14,21 @@ import { findVariableIndex } from './functions/helpers.ts';
 import DatePicker from './components/DatePicker.tsx';
 import { theme } from './theme.ts';
 
-const App = (props) => {  
+const App = (props) => {
+  // Raw .csv
   const [rawData, setRawData] = useState("")
-  
+
+  // Wrangled data (date filter etc.)
   const [data, setData] = useState([])
+
+  // Do not show plot until "Render" is clicked
+  const [isRenderClicked, setIsRenderClicked] = useState(false)
+
+  // Time range from selector component
+  const [timeRange, setTimeRange] = useState({
+    dateMin: DATE_ORIGIN,
+    dateMax: new Date()
+  })
 
   useEffect(() => {
     // Fetch data locally or online based on current setting
@@ -44,11 +56,17 @@ const App = (props) => {
           const date = item[indexDate]
           const country = item[indexCountry]
           const patients = item[indexPatients]
+          const dateObject = new Date(date)
 
-          if (country === "Finland") {
+          // Filter by date range
+          if (
+            country === "Finland"
+            && dateObject >= timeRange.minValue
+            && dateObject <= timeRange.maxValue
+          ) {
             return {
               // Calculate time difference in milliseconds
-              x: new Date(date).getTime() - DATE_ORIGIN_MILLISECONDS,
+              x: dateObject.getTime() - DATE_ORIGIN_MILLISECONDS,
               // Number of patients or 0 if no data
               y: patients || "0.0",
             }
@@ -64,13 +82,16 @@ const App = (props) => {
 
       setData(finnishData)
     }
-  }, [rawData])
+  }, [rawData, timeRange])
 
   return (
     <ThemeProvider theme={theme}>
       <div className='fill'>
-        <DatePicker/>
-        {rawData.length && <Chart id="chart1" data={data}/>}
+        <DatePicker
+          setTimeRange={setTimeRange}
+          setIsRenderClicked={setIsRenderClicked}
+        />
+        {isRenderClicked && <Chart id="chart1" data={data}/>}
       </div>
     </ThemeProvider>)
 }
