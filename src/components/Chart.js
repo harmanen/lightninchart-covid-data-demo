@@ -1,4 +1,4 @@
-import { lightningChart, AxisTickStrategies, AxisScrollStrategies } from '@arction/lcjs'
+import { lightningChart, AxisTickStrategies } from '@arction/lcjs'
 import React, { useRef, useEffect } from 'react'
 import { CHART_TITLE, DATE_ORIGIN } from '../constants';
 
@@ -43,7 +43,7 @@ const Chart = (props) => {
         chart.dispose()
         chartRef.current = undefined
       }
-    }, [id])
+    }, [id, data])
   
     useEffect(() => {
       const components = chartRef.current
