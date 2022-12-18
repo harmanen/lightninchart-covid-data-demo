@@ -1,17 +1,18 @@
 import { createTheme } from "@mui/material";
-import { grey, yellow } from "@mui/material/colors";
 
 export const theme = createTheme({
   palette: {
+    // An educated guess
     primary: {
-      light: yellow[100],
-      main: yellow[300],
-      dark: yellow[500],
+      light: "#ffff8f",
+      main: "#fefe5b",
+      dark: "#c8cb21",
     },
+    // An educated guess
     background: {
-      light: grey[500],
-      main: grey[700],
-      dark: grey[900],
+      light: "#595959",
+      main: "#303030",
+      dark: "#070707",
     }
   }
 })

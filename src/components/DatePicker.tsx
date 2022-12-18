@@ -1,6 +1,7 @@
 import React from 'react';
+import { Box, BoxProps, Slider, Button, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { DATE_ORIGIN_MILLISECONDS } from '../constants';
-import { Box, Slider, Button, Typography } from '@mui/material';
 
 // TBD to date
 function valuetext(value: number) {
@@ -31,6 +32,15 @@ const DateBox = ({ label, date}: DateBoxProps) => {
   )
 }
 
+// Background gradient
+const BackgroundBox = styled(Box)<BoxProps>(({ theme }) => ({
+  background: `linear-gradient(
+    to right,
+    ${theme.palette.background.dark}, 
+    #313233, 
+    ${theme.palette.background.dark})`
+}))
+
 export default function DatePicker() {
   const dateMin = DATE_ORIGIN_MILLISECONDS
   const dateMax = new Date().getTime()
@@ -45,7 +55,7 @@ export default function DatePicker() {
   const dateMaxString = new Date(value[1]).toLocaleDateString("fi-FI")
 
   return (
-    <Box sx={{ bgcolor: "background.dark" }}>
+    <BackgroundBox>
       <Box sx={{
         width: "calc(100%-2em)",
         padding: "2em 4em 0em 4em",
@@ -74,6 +84,6 @@ export default function DatePicker() {
         </Button>
         <DateBox label={"End date"} date={dateMaxString} />
       </Box>
-    </Box>
+    </BackgroundBox>
   );
 }
