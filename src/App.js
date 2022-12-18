@@ -67,8 +67,8 @@ const App = (props) => {
             return {
               // Calculate time difference in milliseconds
               x: dateObject.getTime() - DATE_ORIGIN_MILLISECONDS,
-              // Number of patients or 0 if no data
-              y: patients || "0.0",
+              // Number of patients or NA if no data
+              y: patients || "NA",
             }
           }
 
@@ -76,9 +76,8 @@ const App = (props) => {
         })
         // Filter out other countries
         .filter(item => item !== null)
-        // Filter out zero values. This is okay because after
-        // the initial rise all zero values are probably missing data
-        .filter(item => item.y > 0)
+        // Filter out missing data
+        .filter(item => item.y !== "NA")
 
       setData(finnishData)
     }
