@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, Slide, ThemeProvider } from '@mui/material';
 import './App.css'
 import { theme } from './theme.ts';
@@ -34,6 +34,9 @@ const App = (props) => {
     dateMax: new Date()
   })
 
+  // Hold maximum for y axis. There probably is a better way to do this...?
+  let yMax = useRef(0)
+
   // Required for Slider animation of LoadingIndicator
   const slideContainerRef = React.useRef(null)
 
@@ -68,17 +71,22 @@ const App = (props) => {
           const patients = item[indexPatients]
           const dateObject = new Date(date)
 
+          let datum = null
+
           // Filter by date range and add data if within range
-          let datum = (
+          // Update yMax if needed
+          if(
             dateObject >= timeRange.minValue
             && dateObject <= timeRange.maxValue
-          ) ? {
-            // Calculate time difference in milliseconds
-            x: dateObject.getTime() - DATE_ORIGIN_MILLISECONDS,
-            // Number of patients or NA if no data
-            y: patients || "NA",
+          ) {
+            if (Number(patients) > yMax.current) yMax.current = patients
+            datum = {
+              // Calculate time difference in milliseconds
+              x: dateObject.getTime() - DATE_ORIGIN_MILLISECONDS,
+              // Number of patients or NA if no data  
+              y: patients || "NA",
+            }
           }
-            : null
           
           // Initialize new countyry if not present
           if(!soFar[country]) soFar[country] = []
@@ -111,7 +119,7 @@ const App = (props) => {
           setIsRenderClicked={setIsRenderClicked}
           isDataFetched={isDataFetched}
         />
-        {isRenderClicked && <Chart id="chart1" data={data} />}
+        {isRenderClicked && <Chart id="chart1" data={data} yMax={yMax}/>}
         <Slide
           direction='up'
           in={!isDataFetched}

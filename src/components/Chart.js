@@ -1,9 +1,9 @@
-import { lightningChart, AxisTickStrategies } from '@arction/lcjs'
+import { lightningChart, AxisTickStrategies, LegendBoxBuilders } from '@arction/lcjs'
 import React, { useEffect } from 'react'
 import { CHART_TITLE, DATE_ORIGIN } from '../constants';
 
 const Chart = (props) => {
-  const { data, id } = props
+  const { data, id, yMax } = props
 
   useEffect(() => {
     // Create chart, series and any other static components.
@@ -27,9 +27,8 @@ const Chart = (props) => {
       .setTitle("Number of patients (normalized)")
       .setInterval(
         0,
-        // Find the max y value and increase by 10 %
-        // Math.max(...data.map(item => Number(item.y))) * 1.1
-        60
+        // Increse max value by 10 % to get some "air"
+        yMax.current * 1.1
       ) 
 
     // Dynamically add lines
@@ -41,9 +40,11 @@ const Chart = (props) => {
         .add(values))
 
     // Add legend
-    chart.addLegendBox().add(chart)
+    chart
+      .addLegendBox(LegendBoxBuilders.HorizontalLegendBox)
+      .add(chart)
 
-  }, [id, data])
+  }, [id, data, yMax])
 
   return <div id={id} className='chart'></div>
 }
