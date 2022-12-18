@@ -11,7 +11,7 @@ import {
 
 import { findVariableIndex } from './functions/helpers.ts';
 import DatePicker from './components/DatePicker.tsx';
-import { theme } from './theme';
+import { theme } from './theme.ts';
 
 const App = (props) => {  
   const [rawData, setRawData] = useState("")

@@ -36,9 +36,9 @@ const DateBox = ({ label, date}: DateBoxProps) => {
 const BackgroundBox = styled(Box)<BoxProps>(({ theme }) => ({
   background: `linear-gradient(
     to right,
-    ${theme.palette.background.dark}, 
-    #313233, 
-    ${theme.palette.background.dark})`
+    ${theme.palette.wallpaper.dark}, 
+    ${theme.palette.wallpaper.main}, 
+    ${theme.palette.wallpaper.dark})`
 }))
 
 export default function DatePicker() {
