@@ -39,8 +39,10 @@ const App = (props) => {
     fetch(USE_LOCAL_DATA ? LOCAL_DATA_FILE : DATA_CONSTANTS.URL)
       .then(response => response.text())
       .then(text => setRawData(text))
-      .finally(setIsDatafetched(true))
+      .finally(() => {if(rawData.length) setIsDatafetched(true) })
   }, [rawData])
+
+  console.log(isDataFetched)
 
   useEffect(() => {
     if (rawData.length > 0) {
