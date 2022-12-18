@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material';
-import Chart from './components/Chart';
 import './App.css'
+import { theme } from './theme.ts';
 
 import {
   DATA_CONSTANTS,
@@ -11,8 +11,9 @@ import {
 } from './constants';
 
 import { findVariableIndex } from './functions/helpers.ts';
+import Chart from './components/Chart';
 import DatePicker from './components/DatePicker.tsx';
-import { theme } from './theme.ts';
+import { LoadingIndicator } from './components/LoadingIndicator.tsx';
 
 const App = (props) => {
   // Raw .csv
@@ -20,6 +21,9 @@ const App = (props) => {
 
   // Wrangled data (date filter etc.)
   const [data, setData] = useState([])
+
+  // Disable "Render" button until data is fetched
+  const [isDataFetched, setIsDatafetched] = useState(false)
 
   // Do not show plot until "Render" is clicked
   const [isRenderClicked, setIsRenderClicked] = useState(false)
@@ -33,8 +37,9 @@ const App = (props) => {
   useEffect(() => {
     // Fetch data locally or online based on current setting
     fetch(USE_LOCAL_DATA ? LOCAL_DATA_FILE : DATA_CONSTANTS.URL)
-    .then(response => response.text())
-    .then(text => setRawData(text))
+      .then(response => response.text())
+      .then(text => setRawData(text))
+      .finally(setIsDatafetched(true))
   }, [rawData])
 
   useEffect(() => {
@@ -89,8 +94,10 @@ const App = (props) => {
         <DatePicker
           setTimeRange={setTimeRange}
           setIsRenderClicked={setIsRenderClicked}
+          isDataFetched={isDataFetched}
         />
-        {isRenderClicked && <Chart id="chart1" data={data}/>}
+        {isRenderClicked && <Chart id="chart1" data={data} />}
+        {!isDataFetched && <LoadingIndicator />}
       </div>
     </ThemeProvider>)
 }

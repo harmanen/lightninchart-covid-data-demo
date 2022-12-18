@@ -44,8 +44,9 @@ const BackgroundBox = styled(Box)<BoxProps>(({ theme }) => ({
 export default function DatePicker(props: {
   setTimeRange: Function,
   setIsRenderClicked: Function,
+  isDataFetched: boolean,
 }) {
-  const { setTimeRange, setIsRenderClicked } = props
+  const { setTimeRange, setIsRenderClicked, isDataFetched } = props
 
   // Initial values
   const dateMin = DATE_ORIGIN_MILLISECONDS
@@ -94,7 +95,11 @@ export default function DatePicker(props: {
         padding: "0em 2em 2em 2em",
       }}>
         <DateBox label={"Start date"} timestamp={value[0]} />
-        <Button variant='contained' onClick={handleClickRender}>
+        <Button
+          variant='contained'
+          onClick={handleClickRender}
+          disabled={!isDataFetched}
+        >
           Render!
         </Button>
         <DateBox label={"End date"} timestamp={value[1]} />
