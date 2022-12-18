@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material';
 import Chart from './components/Chart';
 import './App.css'
-import { DATA_CONSTANTS, DATE_ORIGIN_MILLISECONDS } from './constants';
+
+import {
+  DATA_CONSTANTS,
+  DATE_ORIGIN_MILLISECONDS,
+  LOCAL_DATA_FILE, USE_LOCAL_DATA,
+} from './constants';
+
 import { findVariableIndex } from './functions/helpers.ts';
 import DatePicker from './components/DatePicker.tsx';
 import { theme } from './theme';
@@ -13,7 +19,8 @@ const App = (props) => {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    fetch(DATA_CONSTANTS.URL)
+    // Fetch data locally or online based on current setting
+    fetch(USE_LOCAL_DATA ? LOCAL_DATA_FILE : DATA_CONSTANTS.URL)
     .then(response => response.text())
     .then(text => setRawData(text))
   }, [rawData])

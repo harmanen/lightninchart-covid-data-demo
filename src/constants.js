@@ -1,6 +1,9 @@
+// Use pre-downloaded example data for faster development?
+export const USE_LOCAL_DATA = true
+export const LOCAL_DATA_FILE = "example_data.csv"
+
 // https://en.wikipedia.org/wiki/COVID-19
 export const DATE_ORIGIN = new Date("2019-12-01T00:00:00")
-
 export const DATE_ORIGIN_MILLISECONDS = DATE_ORIGIN.getTime()
 
 // Data url and relevant variable names
