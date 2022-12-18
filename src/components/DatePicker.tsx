@@ -10,11 +10,11 @@ function valuetext(value: number) {
 
 type DateBoxProps = {
   label: string,
-  date: string,
+  timestamp: number,
 }
 
 // Container box for title and date to be displayed
-const DateBox = ({ label, date}: DateBoxProps) => {
+const DateBox = ({ label, timestamp }: DateBoxProps) => {
   return (
     <Box sx={{
       display: "flex",
@@ -26,7 +26,7 @@ const DateBox = ({ label, date}: DateBoxProps) => {
         {label}
       </Typography>
       <Typography sx={{ color: "primary.main" }}>
-        {date}
+        {new Date(timestamp).toLocaleDateString("fi-FI")}
       </Typography>
     </Box>
   )
@@ -69,10 +69,6 @@ export default function DatePicker(props: {
     })
   }
 
-  // For the user to see
-  const dateMinString = new Date(value[0]).toLocaleDateString("fi-FI")
-  const dateMaxString = new Date(value[1]).toLocaleDateString("fi-FI")
-
   return (
     <BackgroundBox>
       <Box sx={{
@@ -97,11 +93,11 @@ export default function DatePicker(props: {
         alignItems: "center",
         padding: "0em 2em 2em 2em",
       }}>
-        <DateBox label={"Start date"} date={dateMinString} />
+        <DateBox label={"Start date"} timestamp={value[0]} />
         <Button variant='contained' onClick={handleClickRender}>
           Render!
         </Button>
-        <DateBox label={"End date"} date={dateMaxString} />
+        <DateBox label={"End date"} timestamp={value[1]} />
       </Box>
     </BackgroundBox>
   );
