@@ -58,36 +58,48 @@ const App = (props) => {
       const indexCountry = findVariableIndex(headers, DATA_CONSTANTS.COUNTRY)
       const indexPatients = findVariableIndex(headers, DATA_CONSTANTS.PATIENTS)
       
-      // Find data for Finland and generate input objects for the chart
-      const finnishData = rows
-        .map(item => {
+      // Generate data object
+      // Keys are country names
+      // Values are lists of objects with x, y data values
+      const data = rows
+        .reduce((soFar, item) => {
           const date = item[indexDate]
           const country = item[indexCountry]
           const patients = item[indexPatients]
           const dateObject = new Date(date)
 
-          // Filter by date range
-          if (
-            country === "Finland"
-            && dateObject >= timeRange.minValue
+          // Filter by date range and add data if within range
+          let datum = (
+            dateObject >= timeRange.minValue
             && dateObject <= timeRange.maxValue
-          ) {
-            return {
-              // Calculate time difference in milliseconds
-              x: dateObject.getTime() - DATE_ORIGIN_MILLISECONDS,
-              // Number of patients or NA if no data
-              y: patients || "NA",
-            }
+          ) ? {
+            // Calculate time difference in milliseconds
+            x: dateObject.getTime() - DATE_ORIGIN_MILLISECONDS,
+            // Number of patients or NA if no data
+            y: patients || "NA",
           }
+            : null
+          
+          // Initialize new countyry if not present
+          if(!soFar[country]) soFar[country] = []
+          
+          return {
+            ...soFar,
+            [country]: [...soFar[country], datum]
+          }
+        }, {})
+      
+      // Filter bad data and create a new data object
+      let filteredData = {}
 
-          return null
-        })
-        // Filter out other countries
-        .filter(item => item !== null)
-        // Filter out missing data
-        .filter(item => item.y !== "NA")
+      Object.entries(data).forEach(([key, value]) => {
+        filteredData[key] = value.filter(item => (
+          item !== null
+          && item.y !== "NA"
+        ))
+      })
 
-      setData(finnishData)
+      setData(filteredData)
     }
   }, [rawData, timeRange])
 

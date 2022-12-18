@@ -1,11 +1,9 @@
 import { lightningChart, AxisTickStrategies } from '@arction/lcjs'
-import React, { useRef, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { CHART_TITLE, DATE_ORIGIN } from '../constants';
 
 const Chart = (props) => {
   const { data, id } = props
-  const chartRef = useRef(undefined)
-  
 
   useEffect(() => {
     // Create chart, series and any other static components.
@@ -30,32 +28,22 @@ const Chart = (props) => {
       .setInterval(
         0,
         // Find the max y value and increase by 10 %
-        Math.max(...data.map(item => Number(item.y))) * 1.1
+        // Math.max(...data.map(item => Number(item.y))) * 1.1
+        60
       ) 
 
-    const series = chart.addLineSeries()
-    // Store references to chart components.
-    chartRef.current = { chart, series }
+    // Dynamically add lines
+    Object
+      .entries(data)
+      .map(([country, values]) => chart
+        .addLineSeries()
+        .setName(country)
+        .add(values))
 
-    // Return function that will destroy the chart when component is unmounted.
-    return () => {
-      // Destroy chart.
-      console.log('destroy chart')
-      chart.dispose()
-      chartRef.current = undefined
-    }
+    // Add legend
+    chart.addLegendBox().add(chart)
+
   }, [id, data])
-
-  useEffect(() => {
-    const components = chartRef.current
-    if (!components) return
-
-    // Set chart data.
-    const { series } = components
-    console.log('set chart data', data)
-    series.clear().add(data)
-  
-  }, [data, chartRef])
 
   return <div id={id} className='chart'></div>
 }
