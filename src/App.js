@@ -42,8 +42,6 @@ const App = (props) => {
       .finally(() => {if(rawData.length) setIsDatafetched(true) })
   }, [rawData])
 
-  console.log(isDataFetched)
-
   useEffect(() => {
     if (rawData.length > 0) {
       // Make array of arrays per row from the csv
