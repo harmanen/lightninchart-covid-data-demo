@@ -2,8 +2,7 @@ import React from "react";
 import { CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-export const LoadingIndicator = () => {
-  return (
+export const LoadingIndicator = (
     <Box sx={{
       display: "flex",
       justifyContent: "center",
@@ -25,4 +24,4 @@ export const LoadingIndicator = () => {
       </Box>
     </Box>
   )
-}
+

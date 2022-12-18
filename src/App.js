@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ThemeProvider } from '@mui/material';
+import { Box, Slide, ThemeProvider } from '@mui/material';
 import './App.css'
 import { theme } from './theme.ts';
 
@@ -33,6 +33,9 @@ const App = (props) => {
     dateMin: DATE_ORIGIN,
     dateMax: new Date()
   })
+
+  // Required for Slider animation of LoadingIndicator
+  const slideContainerRef = React.useRef(null)
 
   useEffect(() => {
     // Fetch data locally or online based on current setting
@@ -90,15 +93,21 @@ const App = (props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className='fill'>
+      <Box className='fill' ref={slideContainerRef}>
         <DatePicker
           setTimeRange={setTimeRange}
           setIsRenderClicked={setIsRenderClicked}
           isDataFetched={isDataFetched}
         />
         {isRenderClicked && <Chart id="chart1" data={data} />}
-        {!isDataFetched && <LoadingIndicator />}
-      </div>
+        <Slide
+          direction='up'
+          in={!isDataFetched}
+          container={slideContainerRef.current}
+        >
+          {LoadingIndicator}
+        </Slide>
+      </Box>
     </ThemeProvider>)
 }
 
