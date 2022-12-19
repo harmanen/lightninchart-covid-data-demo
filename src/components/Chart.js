@@ -76,9 +76,11 @@ const Chart = (props) => {
         .setMargin(10)
         .setDraggingMode(UIDraggingModes.disabled)
 
-      const numberOfRows = 16
+      // Nummber of entries (countries) per row
+      const numberOfColumns = 16
 
-      const legendList = new Array(numberOfRows).fill(0).map(_ => legendLayout
+      // Generate legend list
+      const legendList = new Array(numberOfColumns).fill(0).map(_ => legendLayout
         .addElement(LegendBoxBuilders.HorizontalLegendBox)
         .setTitle('')
         .setMargin(0)
@@ -87,8 +89,9 @@ const Chart = (props) => {
 
       let legendIndex = 0
 
+      // Fill in legends
       for (let index = 0; index < seriesList.length; index++) {
-        if (index > 0 && index % numberOfRows === 0) legendIndex++
+        if (index > 0 && index % numberOfColumns === 0) legendIndex++
 
         // Mainly for debugging
         try {
