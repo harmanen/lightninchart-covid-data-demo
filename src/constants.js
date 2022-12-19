@@ -1,5 +1,5 @@
 // Use pre-downloaded example data for faster development?
-export const USE_LOCAL_DATA = true
+export const USE_LOCAL_DATA = false
 export const LOCAL_DATA_FILE = "example_data.csv"
 
 // https://en.wikipedia.org/wiki/COVID-19
@@ -15,4 +15,4 @@ export const DATA_CONSTANTS = {
   PATIENTS: "icu_patients_per_million",
 }
 
-export const CHART_TITLE = "Covid patients in the intensive care"
+export const CHART_TITLE = "Number of COVID-19 patients in intensive care units on a given day per 1,000,000 people per region"

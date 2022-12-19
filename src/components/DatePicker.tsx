@@ -38,7 +38,7 @@ const BackgroundBox = styled(Box)<BoxProps>(({ theme }) => ({
     to right,
     ${theme.palette.wallpaper.dark}, 
     ${theme.palette.wallpaper.main}, 
-    ${theme.palette.wallpaper.dark})`
+    #1d1e1f)`
 }))
 
 export default function DatePicker(props: {

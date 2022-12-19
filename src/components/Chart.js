@@ -52,7 +52,7 @@ const Chart = (props) => {
       // Use default y axis
       chart
         .getDefaultAxisY()
-        .setTitle("Number of patients")
+        .setTitle("")
         .setInterval(
           0,
           // Increse max value by 10 % to get some "air"
