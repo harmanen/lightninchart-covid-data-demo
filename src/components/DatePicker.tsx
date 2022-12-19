@@ -45,8 +45,9 @@ export default function DatePicker(props: {
   setTimeRange: Function,
   setIsRenderClicked: Function,
   isDataFetched: boolean,
+  yMax: { current: Number}
 }) {
-  const { setTimeRange, setIsRenderClicked, isDataFetched } = props
+  const { setTimeRange, setIsRenderClicked, isDataFetched, yMax } = props
 
   // Initial values
   const dateMin = DATE_ORIGIN_MILLISECONDS
@@ -63,6 +64,8 @@ export default function DatePicker(props: {
   // Modify App state
   const handleClickRender = () => {
     setIsRenderClicked(true)
+
+    yMax.current = 0
 
     setTimeRange({
       minValue: new Date(value[0]),

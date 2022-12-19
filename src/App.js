@@ -15,7 +15,7 @@ import Chart from './components/Chart';
 import DatePicker from './components/DatePicker.tsx';
 import { LoadingIndicator } from './components/LoadingIndicator.tsx';
 
-const App = (props) => {
+const App = () => {
   // Raw .csv
   const [rawData, setRawData] = useState("")
 
@@ -118,6 +118,7 @@ const App = (props) => {
           setTimeRange={setTimeRange}
           setIsRenderClicked={setIsRenderClicked}
           isDataFetched={isDataFetched}
+          yMax={yMax}
         />
         {isRenderClicked && <Chart id="chart1" data={data} yMax={yMax}/>}
         <Slide
