@@ -76,7 +76,7 @@ const Chart = (props) => {
         .setMargin(10)
         .setDraggingMode(UIDraggingModes.disabled)
 
-      const numberOfRows = 18
+      const numberOfRows = 16
 
       const legendList = new Array(numberOfRows).fill(0).map(_ => legendLayout
         .addElement(LegendBoxBuilders.HorizontalLegendBox)
