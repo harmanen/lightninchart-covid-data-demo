@@ -1,5 +1,14 @@
-import { lightningChart, AxisTickStrategies, LegendBoxBuilders } from '@arction/lcjs'
 import React, { useEffect } from 'react'
+
+import {
+  lightningChart,
+  AxisTickStrategies,
+  LegendBoxBuilders,
+  UILayoutBuilders,
+  UIOrigins,
+  UIDraggingModes,
+} from '@arction/lcjs'
+
 import { CHART_TITLE, DATE_ORIGIN } from '../constants';
 
 const Chart = (props) => {
@@ -32,18 +41,45 @@ const Chart = (props) => {
       ) 
 
     // Dynamically add lines
-    Object
+    const seriesList = Object
       .entries(data)
       .map(([country, values]) => chart
         .addLineSeries()
         .setName(country)
         .add(values))
 
-    // Add legend
-    chart
-      .addLegendBox(LegendBoxBuilders.HorizontalLegendBox)
-      .add(chart)
+    // Add multi-line legend
+    // https://stackoverflow.com/questions/70271221/how-to-create-horizontal-multiline-legend
+    const legendLayout = chart
+      .addUIElement(UILayoutBuilders.Column)
+      .setPosition({ x: 0, y: 100 })
+      .setOrigin(UIOrigins.LeftTop)
+      .setMargin(10)
+      .setDraggingMode(UIDraggingModes.disabled)
+  
+    const numberOfRows = 16
+    
+    const legendList = new Array(numberOfRows).fill(0).map(_ => legendLayout
+      .addElement(LegendBoxBuilders.HorizontalLegendBox)
+      .setTitle('')
+      .setMargin(0)
+      .setPadding(0)
+    )
 
+    let legendIndex = 0
+
+    for (let index = 0; index < seriesList.length; index++) {
+      if (index > 0 && index % numberOfRows === 0) legendIndex++
+      
+      // Mainly for debugging
+      try {
+        legendList[legendIndex].add(seriesList[index])
+      } catch (error) {
+        console.log("Something went wrong with legend creation, skippind:")
+        console.log(index, seriesList[index])
+        console.log(error)  
+      }
+    }
   }, [id, data, yMax])
 
   return <div id={id} className='chart'></div>
