@@ -18,10 +18,13 @@ export const LoadingIndicator = (
         width: "20em",
         padding: "2em",
         borderRadius: "20em",
-      }}>
-        <Typography sx={{ color: "primary.main", marginBottom: "2em" }}> Fetching data, please wait... </Typography>
-        <CircularProgress />
-      </Box>
-    </Box>
+    }}>
+      <Typography sx={{ color: "primary.main", marginBottom: "2em" }}>
+        Fetching data, please wait...
+      </Typography>
+      <CircularProgress />
+    </Box>  
+  </Box>
+  
   )
 
