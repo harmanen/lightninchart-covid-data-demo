@@ -1,6 +1,6 @@
 # A demo application for displaying COVID-19 data using LightningChart<sup>&#174;</sup>
 
-Optimized for 1980 x 1080 resolution.
+Optimized for 1920 x 1080 resolution.
 
 ## Usage
 
