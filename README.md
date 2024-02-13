@@ -2,6 +2,10 @@
 
 Optimized for 1920 x 1080 resolution.
 
+## Demo video
+ 
+https://1drv.ms/f/s!AtfSNVuoyGYlgYJoCFn20ZpO8njfNQ?e=acwOeh
+
 ## Usage
 
 Assuming Node.js is installed, it should be enough to run `npm install` and `npm start`. Use `npm test` to run tests.
