@@ -4,7 +4,7 @@ Optimized for 1920 x 1080 resolution.
 
 ## Demo video
  
-https://1drv.ms/f/s!AtfSNVuoyGYlgYJoCFn20ZpO8njfNQ?e=acwOeh
+A summary video about the app and implementation can be found [here](https://1drv.ms/f/s!AtfSNVuoyGYlgYJoCFn20ZpO8njfNQ?e=acwOeh) (in OneDrive so try in incognito if the link doesn't work otherwise).
 
 ## Usage
 
